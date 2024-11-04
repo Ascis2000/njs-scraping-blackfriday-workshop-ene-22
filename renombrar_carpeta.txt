@@ -2,4 +2,11 @@
 - renombramos la carpeta en local
   Por ejemplo: njs-scraping-coolmod
 
-- Ejecutamos por consola: git add -A
+- Ejecutamos por consola: 
+  git add -A
+
+- confirma los cambios:
+  git commit -m "Renombrar carpeta de 'njs-scraping-blackfriday-workshop-ene-22 ' a 'njs-scraping-coolmod'"
+
+- enviamos los cambios al remoto:
+  git push origin main
