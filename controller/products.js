@@ -1,8 +1,9 @@
+
 // Importamos la función scraper de la carpeta utils
 const scraper = require('../utils/scraper') // ---Descomenta esta línea---
 
 module.exports = {
-    getHello: async (req, res) => {
+    getSaludo: async (req, res) => {
             res.status(200).json({"mensaje":"La prueba funciona"});
     },
     getProducts: async (req, res) => {
@@ -17,5 +18,4 @@ module.exports = {
         }
 
     }
-    
 }

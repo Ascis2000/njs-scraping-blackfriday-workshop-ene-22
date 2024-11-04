@@ -1,3 +1,4 @@
+
 const puppeteer = require("puppeteer");
 
 // Creamos una función para extraer la información de cada producto
@@ -21,7 +22,7 @@ const extractProductData = async (url,browser) => {
         //imagenes
         productData['img'] = await page.$eval('figure > img', img => img.src.replace(/\n/g, '').trim())
         //descripción
-        productData['description'] = await page.$eval('.productdetailinfocontainer', description=>description.innerText.slice(0,200).replace(/\n/g, ' ').trim().replace(/\s+/g, ' ') + '...')
+        productData['description'] = await page.$eval('.productdetailinfocontainer', description => description.innerText.slice(0,200).replace(/\n/g, ' ').trim().replace(/\s+/g, ' ') + '...')
         
         return productData // Devuelve los datos de un producto
     }
@@ -70,14 +71,15 @@ const scrap = async (url) => {
 
         // Iteramos el array de urls con un bucle for/in y ejecutamos la promesa extractProductData por cada link en el array. Luego pusheamos el resultado a scraped data
         for(productLink in urls2){
-            const product = await extractProductData(urls2[productLink],browser)
-            scrapedData.push(product)
+            const product = await extractProductData(urls2[productLink], browser)
+            scrapedData.push(product);
         }
 
         console.log(scrapedData, "Lo que devuelve mi función scraper", scrapedData.length); 
 
         // cerramos el browser con el método browser.close
-        await browser.close()
+        await browser.close();
+
         // Devolvemos el array con los productos
         return scrapedData;
 
