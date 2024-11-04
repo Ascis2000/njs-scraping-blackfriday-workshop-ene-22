@@ -1,0 +1,2 @@
+
+- nmp i: instalamos las dependencias del package.json

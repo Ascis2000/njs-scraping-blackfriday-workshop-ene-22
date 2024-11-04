@@ -1,0 +1,5 @@
+
+- renombramos la carpeta en local
+  Por ejemplo: njs-scraping-coolmod
+
+- Ejecutamos por consola: git add -A

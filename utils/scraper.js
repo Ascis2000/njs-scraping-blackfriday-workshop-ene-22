@@ -9,21 +9,19 @@ const extractProductData = async (url,browser) => {
         // Abrimos una nueva pestaña
         const page = await browser.newPage()
         // Accedemos al link de cada producto que nos llega por parámetros
-        await page.goto(url)
+        await page.goto(url);
 
         // Utilizamos el método newPage.$eval(selector, function) y almacenamos en productData:
 
         /********** A RELLENAR todos los page.$eval(selector, function)  *********/
         //titulo
-        //productData['name'] = await page.$eval(selector, function)
+        productData['name'] = await page.$eval('h1', name => name.innerHTML.replace(/\n/g, '').trim())
         //precio
-        //productData['price'] = await page.$eval(selector, function)
+        productData['price'] = await page.$eval('div.product-details-prices > div > span', price => price.innerHTML.replace(/\n/g, '').trim())
         //imagenes
-        //productData['img'] = await page.$eval(selector, function)
-        //info
-        //productData['info'] = await page.$eval(selector, function)
+        productData['img'] = await page.$eval('figure > img', img => img.src.replace(/\n/g, '').trim())
         //descripción
-        //productData['description'] = await page.$eval(selector, description=>description.innerText.slice(0,200) + '...')
+        productData['description'] = await page.$eval('.productdetailinfocontainer', description=>description.innerText.slice(0,200).replace(/\n/g, ' ').trim().replace(/\s+/g, ' ') + '...')
         
         return productData // Devuelve los datos de un producto
     }
@@ -55,14 +53,14 @@ const scrap = async (url) => {
         // En este caso , en el CB filtramos el array de items, guardando en un nuevo array
 
         /********** A RELLENAR page.$eval(selector, function)  *********/
-        //const tmpurls = await page.$$eval(selector,funcion)
+        const tmpurls = await page.$$eval('article > figure > a', link => link.map(a => a.href));
         
         //Quitamos los duplicados
         const urls = await tmpurls.filter((link,index) =>{ return tmpurls.indexOf(link) === index})
 
-        console.log("url capuradas",urls)
+        console.log("url capuradas", urls)
         // Me quedo con los 20 primeros productos, porque sino es muy largo
-        const urls2 = urls.slice(0, 21);
+        const urls2 = urls.slice(0, 2);
 
         // Filtramos los productos
         // Extraemos el dato de cada producto
@@ -75,9 +73,9 @@ const scrap = async (url) => {
             const product = await extractProductData(urls2[productLink],browser)
             scrapedData.push(product)
         }
-        
-        console.log(scrapedData, "Lo que devuelve mi función scraper", scrapedData.length) 
-       
+
+        console.log(scrapedData, "Lo que devuelve mi función scraper", scrapedData.length); 
+
         // cerramos el browser con el método browser.close
         await browser.close()
         // Devolvemos el array con los productos
